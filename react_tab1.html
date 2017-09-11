@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clearfix {
+            overflow: hidden;
+            _zoom: 1;
+        }
+
+        .menu li {
+            float: left;
+            padding: 10px 30px;
+            background: pink;
+            list-style: none;
+        }
+
+        .content>div {
+            width: 400px;
+            height: 300px;
+            background: blue;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="myApp">
+        
+    </div>
+
+</body>
+<script src="https://unpkg.com/react@latest/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<script type="text/babel">
+    let Tab = React.createClass({
+        componentDidMount:function(){
+            let menuList = this.refs.demo.querySelectorAll('.menu>li');
+            let contList = this.refs.demo.querySelectorAll('.content>div');
+            for(let i=0;i<menuList.length;i++){
+                menuList[i].onclick = ()=>{
+                    for(let j=0;j<menuList.length;j++){
+                        contList[j].style.display = 'none';
+                    }
+                    contList[i].style.display = 'block';
+                }
+            }
+            contList[0].style.display = 'block';
+        },
+        render:function(){
+            return <div ref='demo'>{this.props.children}</div>
+        }
+    });
+    ReactDOM.render(
+        <Tab>
+            <div className="wrapper">
+                <ul className="menu clearfix">
+                    <li>标题1</li>
+                    <li>标题2</li>
+                    <li>标题3</li>
+                </ul>
+                <div className="content">
+                    <div>内容1</div>
+                    <div>内容2</div>
+                    <div>内容3</div>
+                </div>
+            </div>
+        </Tab>,
+        document.querySelector('#myApp')
+    )
+</script>
+</html>
